@@ -67,6 +67,7 @@ def main(arguments=None):
                 raise Exception('You have passed a wrong search criteria, please pass search type either as OR or AND')
             ref_document = sorted(ref_document)
             document = ','.join(str(x) for x in ref_document)
+            print('Expected outcome: %s' % document)
         return document
     except Exception as e:
         print(str(e))
