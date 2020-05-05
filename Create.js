@@ -217,7 +217,6 @@ class Create extends React.Component {
                 <Row>
                     <Col sm="6">
                         <div className="box create-box">
-                            <h3>General Settings</h3>
                             <FormGroup>
                                 <Label for="testName">Name</Label>
                                 <Input
@@ -232,20 +231,7 @@ class Create extends React.Component {
                                     The name of your load test, doesn't have to be unique.
                                 </FormText>
                             </FormGroup>
-                            <FormGroup>
-                                <Label for="testDescription">Description</Label>
-                                <Input
-                                    value={this.state.formValues.testDescription}
-                                    type="textarea"
-                                    name="testDescription"
-                                    id="testDescription"
-                                    required
-                                    onChange={this.handleInputChange}
-                                />
-                                <FormText color="muted">
-                                    Short description of the test scenario.
-                                </FormText>
-                            </FormGroup>
+
                             <FormGroup>
                                 <Label for="taskCount">Task Count</Label>
                                 <Input
@@ -267,25 +253,6 @@ class Create extends React.Component {
                             </FormGroup>
 
                             <FormGroup>
-                                <Label for="concurrency">Concurrency (TPS)</Label>
-                                <Input
-                                    value={this.state.formValues.concurrency}
-                                    className="form-short"
-                                    type="number"
-                                    max={200}
-                                    min={1}
-                                    step={1}
-                                    name="concurrency"
-                                    id="concurrency"
-                                    required
-                                    onChange={this.handleInputChange}
-                                />
-                                <FormText color="muted">
-                                    The number of concurrent requests generated per task, max value 200.
-                                </FormText>
-                            </FormGroup>
-                            <FormGroup>
-
                                 <Label for="rampUp">Ramp Up</Label>
                                 <InputGroup className="input-group-short">
                                     <Input
@@ -313,6 +280,80 @@ class Create extends React.Component {
 
                                 <FormText color="muted">
                                     The time to reach target concurrency.
+                                </FormText>
+                            </FormGroup>
+                            <FormGroup>
+                                <Label for="endpoint">HTTP endpoint under test</Label>
+                                <Input
+                                    value={this.state.formValues.endpoint}
+                                    type="url"
+                                    name="endpoint"
+                                    id="endpoint"
+                                    required
+                                    onChange={this.handleInputChange}
+                                />
+                                <FormText color="muted">
+                                    Target URL to run tests against, supports http and https. i.e.
+                                    https://example.com:8080.
+                                </FormText>
+                            </FormGroup>
+                            <FormGroup>
+                                <Label for="testDescription">HTTP Headers (Optional)</Label>
+                                <AceEditor
+                                    mode="text"
+                                    theme="github"
+                                    showPrintMargin={true}
+                                    showGutter={true}
+                                    value={this.state.formValues.headers}
+                                    highlightActiveLine={true}
+                                    onChange={this.handleHeadersChange}
+                                    name="headers"
+                                    width="100%"
+                                    height="190px"
+                                    editorProps={{$blockScrolling: true}}
+                                    setOptions={{
+                                        showLineNumbers: true,
+                                        tabSize: 2,
+                                    }}
+                                />
+                                <FormText color="muted">
+                                    A valid JSON object key-value pair containing headers to include in the requests.
+                                </FormText>
+                            </FormGroup>           
+                        </div>
+                    </Col>
+                    <Col sm="6">
+                        <div className="box create-box">
+                            <FormGroup>
+                                <Label for="testDescription">Description</Label>
+                                <Input
+                                    value={this.state.formValues.testDescription}
+                                    type="textarea"
+                                    name="testDescription"
+                                    id="testDescription"
+                                    required
+                                    onChange={this.handleInputChange}
+                                />
+                                <FormText color="muted">
+                                    Short description of the test scenario.
+                                </FormText>
+                            </FormGroup>
+                             <FormGroup>
+                                <Label for="concurrency">Concurrency (TPS)</Label>
+                                <Input
+                                    value={this.state.formValues.concurrency}
+                                    className="form-short"
+                                    type="number"
+                                    max={200}
+                                    min={1}
+                                    step={1}
+                                    name="concurrency"
+                                    id="concurrency"
+                                    required
+                                    onChange={this.handleInputChange}
+                                />
+                                <FormText color="muted">
+                                    The number of concurrent requests generated per task, max value 200.
                                 </FormText>
                             </FormGroup>
                             <FormGroup>
@@ -344,27 +385,8 @@ class Create extends React.Component {
                                 <FormText color="muted">
                                     Time to hold target concurrency.
                                 </FormText>
-                            </FormGroup>
-                        </div>
-                    </Col>
-                    <Col sm="6">
-                        <div className="box create-box">
-                            <h3>Scenario</h3>
-                            <FormGroup>
-                                <Label for="endpoint">HTTP endpoint under test</Label>
-                                <Input
-                                    value={this.state.formValues.endpoint}
-                                    type="url"
-                                    name="endpoint"
-                                    id="endpoint"
-                                    required
-                                    onChange={this.handleInputChange}
-                                />
-                                <FormText color="muted">
-                                    Target URL to run tests against, supports http and https. i.e.
-                                    https://example.com:8080.
-                                </FormText>
-                            </FormGroup>
+                            </FormGroup>        
+
                             <FormGroup>
                                 <Label for="method">HTTP Method</Label>
                                 <Input
@@ -384,29 +406,6 @@ class Create extends React.Component {
 
                                 <FormText color="muted">
                                     The request method, default is GET.
-                                </FormText>
-                            </FormGroup>
-                            <FormGroup>
-                                <Label for="testDescription">HTTP Headers (Optional)</Label>
-                                <AceEditor
-                                    mode="text"
-                                    theme="github"
-                                    showPrintMargin={true}
-                                    showGutter={true}
-                                    value={this.state.formValues.headers}
-                                    highlightActiveLine={true}
-                                    onChange={this.handleHeadersChange}
-                                    name="headers"
-                                    width="100%"
-                                    height="190px"
-                                    editorProps={{$blockScrolling: true}}
-                                    setOptions={{
-                                        showLineNumbers: true,
-                                        tabSize: 2,
-                                    }}
-                                />
-                                <FormText color="muted">
-                                    A valid JSON object key-value pair containing headers to include in the requests.
                                 </FormText>
                             </FormGroup>
                             <FormGroup>
